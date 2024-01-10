@@ -1,4 +1,4 @@
-import {  useState } from 'react';
+import { useState } from 'react';
 import './App.css';
 import axios from 'axios'
 
@@ -9,8 +9,9 @@ function App() {
   const [Thumbnail, setThumbnail] = useState("");
   const [videoQuality, setvideoQuality] = useState("");
   const [videoDownloadURL, setvideoDownloadURL] = useState("");
+  const [error, seterror] = useState(false);
 
-  
+
   const getApidata = async () => {
     const options = {
       method: 'GET',
@@ -34,38 +35,42 @@ function App() {
       setvideoDownloadURL(link);
       setIsLoading(false);
     } catch (error) {
-      console.error(error);
+      seterror(true);
     }
   };
 
 
-  
+
 
 
   return (
-    <div className="container bg-gradient-to-br from-blue-950 via-black-700 to-cyan-950">
+
+
+    <div className="container bg-gray-100">
+
       <a href='https://appopener.co.in/ig/8atgj29jc' target='_blank' rel='noreferrer' className='flex gap-2 flex-row justify-center items-center'>
 
         <img className='h-8' src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Instagram_icon.png/600px-Instagram_icon.png" alt="" srcset="" />
-        <h1 className='text-xl text-white font-semibold font-mono'>Made by Codeiwithbiki</h1>
+        <h1 className='text-xl text-black font-semibold font-mono'>Made by Codeiwithbiki</h1>
       </a>
       <div className="content">
-        <h1 className="heading text-center pb-2 font-serif">Instagram Reels <span className='ease-in'>Downloader</span></h1>
-        
+        <h1 className=" text-center p-2 mb-2 text-4xl font-bold bg-gradient-to-r from-fuchsia-500 via-red-600 to-orange-400 inline-block text-transparent bg-clip-text">Instagram Reels Downloader</h1>
+
         <input
           type="text"
           value={videoUrl}
-          className='p-2 rounded border-2 border-blue-500'
+          className='p-2 rounded border-2 focus:outline-none border-blue-800'
           placeholder='Enter video url'
           onChange={(e) => setVideoUrl(e.target.value)}
         />
-      <button className="button" onClick={getApidata}>Download Video</button>
-      {isLoading && <div className='text-white bg-transparent mt-5'>Loading...</div>}
-      {videoData && <div className='flex flex-row justify-between border-2 border-indigo-400 items-center w-10/12 p-5 m-5'>
-        <img src={Thumbnail} alt="" srcset="" className='h-20 w-20'/>
-        <h3 className='text-white'>{videoQuality}</h3>
-        <a href={videoDownloadURL} target='_blank' rel='noreferrer' className='bg-blue-500 text-white p-2 rounded'> Download </a>
-      </div>}
+        <button className="button" onClick={getApidata}>Download Video</button>
+        {isLoading && <div className='text-black bg-transparent mt-5'>Loading...</div>}
+        {videoData && !error && <div className='flex flex-row justify-between border-2 border-indigo-800 items-center w-10/12 p-5 m-5'>
+          <img src={Thumbnail} alt="" srcset="" className='h-20 w-20' />
+          <h3 className='text-black'>{videoQuality}</h3>
+          <a href={videoDownloadURL} target='_blank' rel='noreferrer' className='bg-blue-800 text-white p-2 rounded'> Download </a>
+        </div>}
+        {error && <div className='p-5 m-5 text-white bg-red-600 rounded'>Something went wrong...</div>}
       </div>
     </div>
   );
