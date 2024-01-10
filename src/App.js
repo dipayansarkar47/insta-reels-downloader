@@ -27,6 +27,7 @@ function App() {
     };
 
     try {
+      setIsLoading(true);
       const response = await axios.request(options);
       setVideoData(response.data);
       setThumbnail(response.data.picture);
